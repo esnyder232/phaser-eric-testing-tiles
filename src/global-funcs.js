@@ -38,5 +38,31 @@ export default class GlobalFuncs {
 		}
 	}
 
-	
+	createSceneAnimsFromAseprite(scene, asepriteSpritesheetKey, asepriteJsonKey) {
+		//find the aseprite json file to parse from
+		var json = scene.cache.json.get(asepriteJsonKey);
+
+		console.log('json:');
+		console.log(json);
+		var anims = scene.anims;
+
+		//parse through the frameTags for the animations and create an animation for each one
+		for(var i = 0; i < json.meta.frameTags.length; i++)
+		{
+
+
+			var f = json.meta.frameTags[i];
+			var key = asepriteSpritesheetKey + "-" + f.name;
+			var frames = anims.generateFrameNumbers(asepriteSpritesheetKey, {start: f.from, end: f.to});
+			var animObject = {
+				key: key,
+				frames: frames,
+				frameRate: 3,
+				repeat: -1
+			}
+
+			//console.log(animObject);
+			anims.create(animObject);
+		}
+	}
 }

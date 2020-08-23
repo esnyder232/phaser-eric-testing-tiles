@@ -1,4 +1,4 @@
-import SimpleScene from "./simple-scene.js"
+import MyTilesetScene from "./my-tileset-scene.js"
 import GlobalFuncs from "../global-funcs.js"
 
 
@@ -14,8 +14,8 @@ export default class GameManagerScene extends Phaser.Scene {
 		console.log('adding scenes...');
 
 		//testing arcade physics
-		this.scene.add('simple-scene', SimpleScene);
-		this.scene.start('simple-scene');
+		this.scene.add('my-tileset-scene', MyTilesetScene);
+		this.scene.start('my-tileset-scene');
 
 
 		//some things to press and log stuff when i need to
