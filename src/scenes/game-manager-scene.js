@@ -24,11 +24,11 @@ export default class GameManagerScene extends Phaser.Scene {
 			switch(e.keyCode) {				
 				case 49: //1
 					console.log('1 clicked.');
-
+					this.scene.pause("my-tileset-scene");
 					break;
 				case 50: //2
 					console.log('2 clicked.');
-					
+					this.scene.resume("my-tileset-scene");
 					break;
 				case 51: //3
 					console.log('3 clicked.');

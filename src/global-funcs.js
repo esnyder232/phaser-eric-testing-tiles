@@ -57,7 +57,7 @@ export default class GlobalFuncs {
 			var animObject = {
 				key: key,
 				frames: frames,
-				frameRate: 3,
+				frameRate: 24,
 				repeat: -1
 			}
 

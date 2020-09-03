@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import GameManagerScene from './scenes/game-manager-scene.js'
+import PhaserMatterCollisionPlugin from "phaser-matter-collision-plugin"
 
 export default class App {
 	constructor() {
@@ -21,6 +22,15 @@ export default class App {
 						y: 1
 					}
 				}
+			},
+			plugins: {
+				scene: [
+					{
+						plugin: PhaserMatterCollisionPlugin,
+						key: "matterCollision",
+						mapping: "matterCollision"
+					}
+				]
 			},
 			scale: {
 				zoom:3
