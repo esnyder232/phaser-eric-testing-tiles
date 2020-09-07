@@ -41,9 +41,6 @@ export default class GlobalFuncs {
 	createSceneAnimsFromAseprite(scene, asepriteSpritesheetKey, asepriteJsonKey) {
 		//find the aseprite json file to parse from
 		var json = scene.cache.json.get(asepriteJsonKey);
-
-		console.log('json:');
-		console.log(json);
 		var anims = scene.anims;
 
 		//parse through the frameTags for the animations and create an animation for each one

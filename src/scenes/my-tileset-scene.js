@@ -18,7 +18,7 @@ export default class MyTilesetScene extends Phaser.Scene {
 		this.load.tilemapTiledJSON("my-tilemap", "assets/tilemaps/my-tilemap.json");
 		this.load.image("my-tileset", "assets/tilesets/my-tileset.png");
 
-		this.load.spritesheet("slime", "assets/spritesheets/slime.png", {frameWidth: 32, frameHeight: 32});
+		this.load.spritesheet("slime", "assets/spritesheets/slime.png", {frameWidth: 64, frameHeight: 64});
 		this.load.json("slime-json", "assets/spritesheets/slime.json");
 	}
 	  
@@ -51,6 +51,7 @@ export default class MyTilesetScene extends Phaser.Scene {
 		// create player
 		///////////////////////////
 		this.player.create();
+
 	}
 
 	  

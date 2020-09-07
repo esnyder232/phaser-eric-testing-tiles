@@ -1,9 +1,6 @@
 import GlobalFuncs from "../global-funcs.js"
 import PlayerGroundIdleState from "./player-ground-idle-state.js";
-import CollisionCategories from "../collision-categories.js";
-import PlayerDamagedBaseState from "./player-damaged-base-state.js";
-import PlayerGroundStrongAttackState from "./player-ground-strong-attack-state.js";
-import PlayerGroundStrongAttackStateCopy from "./player-ground-strong-attack-state-copy.js";
+
 //the player class
 export default class Player {
 	constructor(scene) {
@@ -145,7 +142,7 @@ export default class Player {
 
 		this.sprite.setScale(2, 2);
 		this.sprite.setFixedRotation();
-		this.sprite.setOrigin(0.5, 0.6); //adjust the sprite drawing location a little up so it fits with the rectangle hit box
+		this.sprite.setOrigin(0.5, 0.55); //adjust the sprite drawing location a little up so it fits with the rectangle hit box
 		this.sprite.setPosition(xPos, yPos);
 
 
@@ -228,26 +225,13 @@ export default class Player {
 
 		this.state.update(timeElapsed, dt);
 		
-		//testing damaged state
-		if(this.playerController.attackWeak.state && !this.playerController.attackWeak.prevState)
-		{
-			this.nextState = new PlayerDamagedBaseState(this.scene, this);
-		}
-
-		//testing attacking state
-		if(this.playerController.attackStrong.state && !this.playerController.attackStrong.prevState)
-		{
-			//this.nextState = new PlayerGroundStrongAttackState(this.scene, this);
-			this.nextState = new PlayerGroundStrongAttackStateCopy(this.scene, this);
-
-			
-		}
-
 		//update the prevState on the virtual controller for the player
 		for(var key in this.playerController)
 		{
 			this.playerController[key].prevState = this.playerController[key].state;
 		}
+
+
 
 		
 

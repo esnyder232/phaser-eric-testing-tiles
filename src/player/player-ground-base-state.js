@@ -18,12 +18,6 @@ export default class PlayerGroundBaseState extends PlayerBaseState {
 			this.player.nextState = new PlayerAirAllState(this.scene, this.player);
 		}
 
-		//add jump force
-		if(this.player.playerController.jump.state && !this.player.playerController.jump.prevState)
-		{
-			this.player.sprite.applyForce({x: 0, y: -0.01});
-		}
-
 		super.update(timeElapsed, dt);
 	}
 
