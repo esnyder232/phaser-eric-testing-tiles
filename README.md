@@ -11,28 +11,28 @@ DONE - build a simple level with Tiled
 DONE   - create collisiosn in Tiled
 DONE   - make spawn point in level with Tiled
 DONE - import level into Phaser with collisions
-DONE - create slime
+DONE - create slime assets
 DONE  - idle
 DONE  - walking
 DONE  - rising
 DONE  - falling
- - Import slime into world
+DONE - Import slime into world
 DONE  - use a box for collision (roughly the size of the actual slime)
-  - slime uses WASD for controls, with animation playing appropriately 
-- Camera
- - make camera follow slime around
- - make it so the camera doesn't go off tilemap
-
+DONE  - slime uses WASD for controls, with animation playing appropriately 
+DONE - Camera
+DONE  - make camera follow slime around
+DONE  - make it so the camera doesn't go off tilemap
 
 
 TODO 2:
- - modify slime
-   - modify slime to have a compound body instead of simple body
-
+- modify slime
+DONE   - modify slime to have a compound body instead of simple body
+   - modify slime to "fix" the ghost collision problem
+   - modify slime to "fix" the sticky wall problem
 
 
 TODO 3:
- - build a player class
-   - create state machine as you did in Unity
-   - use old sprite sheet for graphics
+DONE - build a player class
+DONE   - create state machine as you did in Unity
+DONE   - use old sprite sheet for graphics
    

@@ -41,8 +41,6 @@ export default class Player {
 		this.state = null; 
 		this.nextState = null;
 
-		this.frameNum = 0;
-
 		//the bottom sensor used to tell if the sprite is on the ground or not
 		this.botSensor = {
 			isColliding: false,
@@ -184,45 +182,6 @@ export default class Player {
 	
 
 	update(timeElapsed, dt) {
-		// console.log("===UPDATE STARTED  " + this.frameNum);
-		// var direction = 0;
-
-		// if(this.playerController.right.state)
-		// {
-		// 	this.sprite.anims.play("slime-walk");
-		// 	this.sprite.flipX = false;
-		// 	direction = 1;
-		// }
-		// else if(this.playerController.left.state)
-		// {
-		// 	this.sprite.anims.play("slime-walk");
-		// 	this.sprite.flipX = true;
-		// 	direction = -1;
-		// }
-		// else {
-		// 	this.sprite.anims.play("slime-idle");
-		// 	this.sprite.flipX = false;
-		// 	direction = 0;
-		// }
-		
-
-		// this.sprite.setVelocityX(direction * this.walkSpeed * (dt/1000))
-
-		// if(this.playerController.up.state && !this.playerController.up.prevState)
-		// {
-		// 	var force = -0.002
-		// 	this.sprite.setVelocityY(0);
-		// 	var f = new Phaser.Math.Vector2(0, force);
-		// 	this.sprite.applyForce(f);
-		// }
-
-		// this.debugCounter += dt;
-		// if(this.debugCounter >= 1000)
-		// {
-		// 	console.log(this.sprite.x + ", " + this.sprite.y);
-		// 	this.debugCounter %= 1000;
-		// }
-
 		this.state.update(timeElapsed, dt);
 		
 		//update the prevState on the virtual controller for the player
@@ -230,11 +189,6 @@ export default class Player {
 		{
 			this.playerController[key].prevState = this.playerController[key].state;
 		}
-
-
-
-		
-
 
 		//change states if needed
 		if(this.nextState)
@@ -245,9 +199,5 @@ export default class Player {
 			this.state = this.nextState;
 			this.nextState = null;
 		}
-
-		this.frameNum++;
-
-	
 	}
 }

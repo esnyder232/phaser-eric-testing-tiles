@@ -52,6 +52,23 @@ export default class MyTilesetScene extends Phaser.Scene {
 		///////////////////////////
 		this.player.create();
 
+
+
+		///////////////////////////
+		// create camera
+		///////////////////////////
+		this.cameraRightBound = 300;
+		this.cameraLeftBound = -50;
+		this.cameraUpBound = -450;
+		this.cameraDownBound = 450;
+
+		this.cameraOffsetX = -(this.cameras.main.width / 2);
+		this.cameraOffsetY = -(this.cameras.main.height / 2);
+
+		this.cameraRightBoundInner = this.cameraRightBound - this.cameras.main.width;
+		this.cameraLeftBoundInner = this.cameraLeftBound;
+		this.cameraUpBoundInner = this.cameraUpBound;
+		this.cameraDownBoundInner = this.cameraDownBound - this.cameras.main.height;
 	}
 
 	  
@@ -59,6 +76,37 @@ export default class MyTilesetScene extends Phaser.Scene {
 
 		this.player.update(timeElapsed, dt);
 	
+		var newx = this.player.sprite.x + this.cameraOffsetX;
+		var newy = this.player.sprite.y + this.cameraOffsetY;
+
+		//prevents scrolling to the left too much
+		if(newx <= this.cameraLeftBoundInner)
+		{
+			newx = this.cameraLeftBoundInner;
+		}
+		//prevents scrolling to the right too much
+		else if(newx >= this.cameraRightBoundInner)
+		{
+			newx = this.cameraRightBoundInner;
+		}
+
+		//prevents scrolling up too much
+		if(newy <= this.cameraUpBoundInner)
+		{
+			newy = this.cameraUpBoundInner;
+		}
+		//prevents scrolling down too much
+		else if(newy >= this.cameraDownBoundInner)
+		{
+			newy = this.cameraDownBoundInner;
+		}
+
+		this.cameras.main.scrollX = newx;
+		this.cameras.main.scrollY = newy;
+
+
+
 	}
 }
+
 
