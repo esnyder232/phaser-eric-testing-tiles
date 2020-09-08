@@ -41,6 +41,15 @@ export default class Player {
 		this.state = null; 
 		this.nextState = null;
 
+		//main body
+		this.mainBody = {
+			isColliding: false,
+			body: null,
+			unregisterFunctions: [],
+			arrBodiesColliding: [], //currently colliding bodies
+			arrPairs: []
+		};
+
 		//the bottom sensor used to tell if the sprite is on the ground or not
 		this.botSensor = {
 			isColliding: false,
@@ -48,6 +57,8 @@ export default class Player {
 			unregisterFunctions: [],
 			arrBodiesColliding: [] //currently colliding bodies
 		};
+
+
 	}
 
 	create() {
@@ -58,8 +69,8 @@ export default class Player {
 		this.globalfuncs.createSceneAnimsFromAseprite(this.scene, "slime", "slime-json");
 
 		//create matter sprite
-		var xPos = 96;
-		var yPos = 70;
+		var xPos = 186;
+		var yPos = -70;
 		var hitboxWidth = 10;
 		var hitboxHeight = 10;
 
@@ -114,18 +125,33 @@ export default class Player {
 		var left = xPos - (hitboxWidth/2);
 		var right = xPos + (hitboxWidth/2);
 
-		this.mainBody = Bodies.rectangle(xPos, yPos, hitboxWidth, hitboxHeight);
+		this.mainBody.body = Bodies.rectangle(xPos, yPos, hitboxWidth, hitboxHeight);
 		this.botSensor.body = Bodies.rectangle(xPos, bot, hitboxWidth, sensorThickness, {isSensor: true});
 
 		this.compoundBody = Body.create({
-			parts: [this.mainBody, this.botSensor.body],
-			frictionStatic: 0,
-			frictionAir: 0.02,
+			parts: [this.mainBody.body, this.botSensor.body],
+			frictionStatic: 0.1,
+			frictionAir: 0,
 			friction: 0.1
 		});
 
 		this.sprite.setExistingBody(this.compoundBody);
 
+
+		//main body
+		this.mainBody.unregisterFunctions.push(this.scene.matterCollision.addOnCollideStart({
+			objectA: this.mainBody.body,
+			callback: this.onCollideMainBodyStart,
+			context: this
+		}));
+
+		this.mainBody.unregisterFunctions.push(this.scene.matterCollision.addOnCollideEnd({
+			objectA: this.mainBody.body,
+			callback: this.onCollideMainBodyEnd,
+			context: this
+		}));
+
+		//bot sensor
 		this.botSensor.unregisterFunctions.push(this.scene.matterCollision.addOnCollideStart({
 			objectA: this.botSensor.body,
 			callback: this.onCollideBotSensorStart,
@@ -138,12 +164,17 @@ export default class Player {
 			context: this
 		}));
 
+
+
 		this.sprite.setScale(2, 2);
 		this.sprite.setFixedRotation();
 		this.sprite.setOrigin(0.5, 0.55); //adjust the sprite drawing location a little up so it fits with the rectangle hit box
 		this.sprite.setPosition(xPos, yPos);
 
 
+		console.log(this);
+
+		this.frameNum = 0;
 		
 	}
 
@@ -168,6 +199,34 @@ export default class Player {
 		{
 			this.botSensor.isColliding = false;
 		}
+	}
+
+
+	
+	onCollideMainBodyStart(e) {
+		// console.log('main body collide');
+		// console.log(e);
+		this.mainBody.arrBodiesColliding.push(e.bodyB);
+		this.mainBody.isColliding = true;
+		this.mainBody.arrPairs.push(e.pair);
+	}
+
+	
+	onCollideMainBodyEnd(e) {
+		var objIndex = this.mainBody.arrBodiesColliding.findIndex((x) => {return x === e.bodyB;});
+		if(objIndex >= 0)
+		{
+			this.mainBody.arrBodiesColliding.splice(objIndex, 1);
+		}
+
+		if(this.mainBody.arrBodiesColliding.length > 0)
+		{
+			this.mainBody.isColliding = true;
+		}
+		else
+		{
+			this.mainBody.isColliding = false;
+		}
 		
 	}
 
@@ -182,6 +241,7 @@ export default class Player {
 	
 
 	update(timeElapsed, dt) {
+		this.frameNum++;
 		this.state.update(timeElapsed, dt);
 		
 		//update the prevState on the virtual controller for the player
@@ -199,5 +259,22 @@ export default class Player {
 			this.state = this.nextState;
 			this.nextState = null;
 		}
+
+		
+		// if(this.mainBody.isColliding || this.frameNum >= 35)
+		// {
+		// 	console.log(this.frameNum + ", " + this.mainBody.isColliding + ", " + this.mainBody.body.position.x + ", " + this.mainBody.arrBodiesColliding.length);
+		// 	for(var i = 0; i < this.mainBody.arrBodiesColliding.length; i++)
+		// 	{
+		// 		console.log(this.mainBody.arrBodiesColliding[i]);
+		// 		console.log(this.mainBody.arrPairs[i]);
+		// 	}
+
+			
+
+		// 	//console.log(this);
+		// 	this.scene.scene.pause(this.scene.scene.key);
+		// 	//this.breakit = a + b;
+		// }
 	}
 }
